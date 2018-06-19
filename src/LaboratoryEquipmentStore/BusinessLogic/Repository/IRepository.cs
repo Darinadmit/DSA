@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Store;
+using Store.BusinessLogic;
 
 namespace Store.Repository
 {
@@ -29,8 +30,20 @@ namespace Store.Repository
 
         List<Store.BusinessLogic.Order> GetListOfOrders(Store.BusinessLogic.Manager manager);
 
+        List<Store.BusinessLogic.Order> GetListOfOrdersByClient(Store.BusinessLogic.Client client); //
+
         Store.BusinessLogic.Supplier GetSupplierByProduct(Store.BusinessLogic.Product product);
 
         List<Store.BusinessLogic.Manager> GetListOfManagers();
+
+        Manager GetManager(int id);//
+
+        Client GetClient(int id);
+
+        Supplier GetSupplier(int id);
+
+        Order GetOrder(int id);
+
+        Product GetProduct(int id);
     }
 }

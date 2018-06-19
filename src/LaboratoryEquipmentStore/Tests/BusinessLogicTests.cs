@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Store.BusinessLogic;
 using System.Collections.Generic;
+using Store.Repository;
 
 
 namespace Tests
@@ -10,7 +11,7 @@ namespace Tests
     public class BusinessLogicTests
     {
 
-        static Store.BusinessLogic.GeneralInfo generalInfo = new Store.BusinessLogic.GeneralInfo(new RepositoryForTests());
+        static Store.BusinessLogic.GeneralInfo generalInfo = new Store.BusinessLogic.GeneralInfo(new Store.Repository.RepositoryForTests());
 
         [TestMethod]
         public void TestForSupplier()
@@ -39,7 +40,7 @@ namespace Tests
             Order  ord = cl.RequestNewOrder(man, GeneralInfo.DataProvider.GetAllProducts()[0], 10);
             cl.OrderConfirmation(ord);
             cl.PayOrder(ord);
-            man.PurchaseOrder(ord);
+            sup.SendProduct(ord.OrderProduct, 10 + GeneralInfo.Reserve);
             man.ShipOrder(ord);
             Assert.AreEqual(GeneralInfo.DataProvider.GetAllProducts()[0].Count, 2);
         }
@@ -58,7 +59,6 @@ namespace Tests
             Order ord = cl.RequestNewOrder(man, GeneralInfo.DataProvider.GetAllProducts()[0], 10);
             cl.OrderConfirmation(ord);
             cl.PayOrder(ord);
-            man.PurchaseOrder(ord);
             man.ShipOrder(ord);
             Assert.AreEqual(GeneralInfo.DataProvider.GetAllProducts()[0].Count, 5);
         }
@@ -94,13 +94,13 @@ namespace Tests
             Order ord = cl.RequestNewOrder(man, GeneralInfo.DataProvider.GetAllProducts()[0], 10);
             cl.OrderConfirmation(ord);
             cl.PayOrder(ord);
-            man.PurchaseOrder(ord);
+            sup.SendProduct(ord.OrderProduct, 10);
             man.ShipOrder(ord);
             Client cl2 = new Client("Roman", "Nsk, Lenina, 32");
             Order ord2 = cl.RequestNewOrder(man, GeneralInfo.DataProvider.GetAllProducts()[1], 20);
             cl.OrderConfirmation(ord2);
             cl.PayOrder(ord2);
-            man.PurchaseOrder(ord2);
+            sup.SendProduct(ord.OrderProduct, 7);
             man.ShipOrder(ord2);
             man.CreateNewOrders();
             Assert.IsTrue(GeneralInfo.DataProvider.GetListOfOrders(man).Count<=4 && GeneralInfo.DataProvider.GetListOfOrders(man).Count >= 2);

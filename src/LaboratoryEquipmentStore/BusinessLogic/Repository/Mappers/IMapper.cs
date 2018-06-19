@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
-namespace Store.Repository
+namespace Store.Repository.Mappers
 {
     interface IMapper<T>
     {

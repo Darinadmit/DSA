@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Store.BusinessLogic;
 
-namespace Store.Repository
+namespace Store.Repository.Mappers
 {
     public class ProductMapper : IMapper<Store.BusinessLogic.Product>
     {

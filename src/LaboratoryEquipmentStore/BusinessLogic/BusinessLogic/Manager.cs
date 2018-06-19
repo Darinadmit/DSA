@@ -40,7 +40,7 @@ namespace Store.BusinessLogic
             return newOrders;
         }
 
-        public void PurchaseOrder(Order order)
+       /* public void PurchaseOrder(Order order)
         {
             if (order.OrderStatus == GeneralInfo.OrderStatus.WaitingForDelivery && order.OrderProduct.Count < order.Count)
             {
@@ -48,6 +48,7 @@ namespace Store.BusinessLogic
                 supplier.SendProduct(order.OrderProduct, order.Count - order.OrderProduct.Count + GeneralInfo.Reserve);
             }
         }
+        */
 
         public void ShipOrder(Order order)
         {
@@ -59,23 +60,5 @@ namespace Store.BusinessLogic
             }
         }
 
-        void RemoveOrder(Order order)
-        {
-            order.SetStatus(GeneralInfo.OrderStatus.Removed);
-            GeneralInfo.DataProvider.DeleteOrder(order);
-        }
-
-        void PayOrder(Order order)
-        {
-            if (order.OrderStatus == GeneralInfo.OrderStatus.WaitingForPayment)
-                order.SetStatus(GeneralInfo.OrderStatus.WaitingForDelivery);
-        }
-
-        void OrderConfirmation(Order order)
-        {
-            if (order.OrderStatus == GeneralInfo.OrderStatus.WaitingForConfirmation &&
-                order.Price <= order.OrderProduct.Price * order.Count * 2)
-                order.SetStatus(GeneralInfo.OrderStatus.WaitingForPayment);
-        }
     }
 }

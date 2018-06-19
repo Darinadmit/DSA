@@ -29,7 +29,7 @@ namespace Store.BusinessLogic
 
         public void SendProduct(Product product, int count)
         {
-            if (ListOfProducts.Find(x => product.Id == x) <=0 )
+            if (ListOfProducts.Find(x => product.Id == x) >=0 )
             {
                 product.SetCount(product.Count + count);
                 GeneralInfo.DataProvider.UpdateProduct(product);

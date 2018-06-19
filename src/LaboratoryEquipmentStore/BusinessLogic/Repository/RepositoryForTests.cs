@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Store.BusinessLogic;
 using Store.Repository;
 
-namespace Tests
+namespace Store.Repository
 {
     public class RepositoryForTests : Store.Repository.IRepository
     {
@@ -85,6 +85,36 @@ namespace Tests
         public void UpdateProduct(Product product)
         {
 
+        }
+
+        public Manager GetManager(int id)
+        {
+            return currentManagers.Find(x => x.Id == id);
+        }
+
+        public Client GetClient(int id)
+        {
+            return currentClients.Find(x => x.Id == id);
+        }
+
+        public Supplier GetSupplier(int id)
+        {
+            return currentSuppliers.Find(x => x.Id == id);
+        }
+
+        public Order GetOrder(int id)
+        {
+            return currentOrders.Find(x => x.Id == id);
+        }
+
+        public Product GetProduct(int id)
+        {
+            return currentProducts.Find(x => x.Id == id);
+        }
+
+        public List<Store.BusinessLogic.Order> GetListOfOrdersByClient(Store.BusinessLogic.Client client)
+        {
+            return currentOrders.FindAll(x => x.OrderClient == client);
         }
     }
 }
