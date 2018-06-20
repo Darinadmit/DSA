@@ -9,7 +9,8 @@ namespace Store.Repository.Mappers
 {
     interface IMapper<T>
     {
-        List<T> FindAll(string cond);
+        List<T> FindAll();
+        T FindById(int id);
         void Update(T item);
         int Create(T item);
     }

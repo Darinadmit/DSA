@@ -32,7 +32,7 @@ namespace Store.Repository
 
         List<Store.BusinessLogic.Order> GetListOfOrdersByClient(Store.BusinessLogic.Client client); //
 
-        Store.BusinessLogic.Supplier GetSupplierByProduct(Store.BusinessLogic.Product product);
+        //Store.BusinessLogic.Supplier GetSupplierByProduct(Store.BusinessLogic.Product product);
 
         List<Store.BusinessLogic.Manager> GetListOfManagers();
 

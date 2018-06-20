@@ -8,69 +8,67 @@ using Store.BusinessLogic;
 
 namespace Store.Repository.Mappers
 {
-    public class ProductMapper : IMapper<Store.BusinessLogic.Product>
+    public class ClientMapper : IMapper<Store.BusinessLogic.Client>
     {
         private MySqlConnection conn;
 
-        public ProductMapper(MySqlConnection newConn)
+        public ClientMapper(MySqlConnection newConn)
         {
             conn = newConn;
         }
 
-        public int Create(Product item)
+        public int Create(Client item)
         {
             conn.Open();
-            string sql = "Insert into `storedb`.`products` (`name`, `price`, `count`) values ('" + item.Name + "', '" + item.Price.ToString() + "', '" + item.Count.ToString() + "');";
+            string sql = "Insert into `storedb`.`clients` (`name`, `address`) values ('" + item.Name + "', '" + item.Address + "');";
             MySqlCommand command = new MySqlCommand(sql, conn);
             command.ExecuteNonQuery();
             conn.Close();
             return Convert.ToInt32(command.LastInsertedId);
         }
 
-        public List<Product> FindAll()
+        public List<Client> FindAll()
         {
             conn.Open();
-            string sql = "SELECT `id`,`name`, `count`, `price`  FROM `storedb`.`products`";
+            string sql = "SELECT `id`,`name`, `address`  FROM `storedb`.`clients`";
             MySqlCommand command = new MySqlCommand(sql, conn);
             MySqlDataReader reader = command.ExecuteReader();
-            List<Product> answer = new List<Product>();
+            List<Client> answer = new List<Client>();
             while (reader.Read())
             {
                 int id = Convert.ToInt32(reader[0].ToString());
                 string name = reader[1].ToString();
-                int count = Convert.ToInt32(reader[2].ToString());
-                double price = Convert.ToDouble(reader[3].ToString());
-                answer.Add(new Product(id, name, price, count));
+                string address = reader[2].ToString();
+                answer.Add(new Client(id, name, address));
             }
             reader.Close();
             conn.Close();
             return answer;
         }
 
-        public Product FindById(int id)
+        public Client FindById(int id)
         {
             conn.Open();
-            string sql = "SELECT `id`,`name`, `count`, `price`  FROM `storedb`.`products` WHERE id = " + id.ToString();
+            string sql = "SELECT `id`,`name`, `address`  FROM `storedb`.`clients` WHERE id = " + id.ToString();
             MySqlCommand command = new MySqlCommand(sql, conn);
             MySqlDataReader reader = command.ExecuteReader();
-            List<Product> answer = new List<Product>();
+            List<Client> answer = new List<Client>();
             while (reader.Read())
             {
                 int newId = Convert.ToInt32(reader[0].ToString());
                 string name = reader[1].ToString();
-                int count = Convert.ToInt32(reader[2].ToString());
-                double price = Convert.ToDouble(reader[3].ToString());
-                answer.Add(new Product(id, name, price, count));
+                string address = reader[2].ToString();
+                answer.Add(new Client(newId, name, address));
             }
             reader.Close();
             conn.Close();
             return answer[0];
         }
 
-        public void Update(Product item)
+        public void Update(Client item)
         {
             conn.Open();
-            string sql = "Update `storedb`.`products` set `name` = '" + item.Name + "', `price` ='" + item.Price.ToString() + "', `count`='" + item.Count.ToString() + "' where id = " + item.Id;
+            string sql = "Update `storedb`.`clients` set `name` = '" + item.Name + "', `address` ='" + item.Address + "' where id = " + item.Id;
             MySqlCommand command = new MySqlCommand(sql, conn);
             command.ExecuteNonQuery();
             conn.Close();
